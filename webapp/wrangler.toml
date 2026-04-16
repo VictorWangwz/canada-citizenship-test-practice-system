@@ -1,0 +1,9 @@
+name = "canada-citizenship-test"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = ".vercel/output/static"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "citizenship-test-db"
+database_id = "d13edbd5-9fdd-4900-bdcb-da763be0a0bc"

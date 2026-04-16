@@ -1,23 +1,30 @@
 // API route to submit answers and get results
-import { NextResponse } from 'next/server';
+// Updated to use Cloudflare D1
+
+import { NextRequest } from 'next/server';
 import { getQuestionById } from '@/lib/database-d1';
-import { getRequestContext } from '@cloudflare/next-on-pages';
 
 export const runtime = 'edge';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    // Get D1 database binding from Cloudflare context
-    const { env } = getRequestContext();
-    const db = env.DB;
-    
     const body = await request.json();
     const { answers } = body; // answers: { questionId: userAnswer }
     
     if (!answers || typeof answers !== 'object') {
-      return NextResponse.json(
-        { success: false, error: 'Invalid request body' },
-        { status: 400 }
+      return new Response(
+        JSON.stringify({ success: false, error: 'Invalid request body' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    // @ts-ignore - D1 binding is available in Cloudflare Pages
+    const db = request.env?.DB;
+    
+    if (!db) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Database not configured' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
     
@@ -49,22 +56,28 @@ export async function POST(request: Request) {
     const score = totalQuestions > 0 ? (correctCount / totalQuestions) * 100 : 0;
     const passed = score >= 80;
     
-    return NextResponse.json({
-      success: true,
-      results,
-      summary: {
-        totalQuestions,
-        correctCount,
-        incorrectCount: totalQuestions - correctCount,
-        score: Math.round(score),
-        passed
+    return new Response(
+      JSON.stringify({
+        success: true,
+        results,
+        summary: {
+          totalQuestions,
+          correctCount,
+          incorrectCount: totalQuestions - correctCount,
+          score: Math.round(score),
+          passed
+        }
+      }),
+      { 
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
       }
-    });
+    );
   } catch (error) {
     console.error('Error submitting test:', error);
-    return NextResponse.json(
-      { success: false, error: 'Failed to submit test' },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ success: false, error: 'Failed to submit test' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 }
