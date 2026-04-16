@@ -1,0 +1,55 @@
+# Git
+.git
+.gitignore
+
+# Python virtual environment and cache
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Python project files
+*.egg-info
+dist
+build
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed in image)
+README.md
+PLAN.md
+*.md
+!webapp/package.json
+
+# Test files
+test_*.py
+debug_*.py
+
+# Scripts (not needed in image)
+*.ps1
+
+# Data files (except questions.db which we want to include)
+data/*.json
+data/*.txt
+data/raw
+data/processed
+data/cache
+
+# Webapp development files
+webapp/node_modules
+webapp/.next
+webapp/.git
+webapp/npm-debug.log*
+webapp/yarn-debug.log*
+webapp/yarn-error.log*

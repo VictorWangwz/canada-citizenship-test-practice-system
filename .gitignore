@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Data files (local only)
+data/raw/*.pdf
+data/cache/
+data/processed/*.json
+data/processed/*.txt
+data/processed/test_*.txt
+data/processed/answers_*.txt
+
+# Database (local development)
+# Uncomment if you don't want to commit the database
+# data/questions.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# OS
+.DS_Store
+Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test and debug files
+test_*.py
+debug_*.py
+test_*.txt
+
+# Docker development files (scripts are committed)
+# None - Docker files should be committed
+
+# Terraform / Infrastructure (if added later)
+*.tfstate
+*.tfstate.backup
+.terraform/

@@ -1,0 +1,16 @@
+[project]
+name = "canada-citizenship-test"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "anthropic>=0.94.1",
+    "openai>=2.31.0",
+    "pymupdf>=1.27.2.2",
+    "pypdf2==3.0.1",
+    "python-dotenv==1.0.0",
+    "requests==2.31.0",
+    "youtube-transcript-api==0.6.2",
+    "yt-dlp>=2026.3.17",
+]
