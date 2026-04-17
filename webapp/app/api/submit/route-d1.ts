@@ -6,9 +6,13 @@ import { getQuestionById } from '@/lib/database-d1';
 
 export const runtime = 'edge';
 
+interface SubmitRequestBody {
+  answers: Record<string, string>;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json() as SubmitRequestBody;
     const { answers } = body; // answers: { questionId: userAnswer }
     
     if (!answers || typeof answers !== 'object') {

@@ -5,13 +5,17 @@ import { getRequestContext } from '@cloudflare/next-on-pages';
 
 export const runtime = 'edge';
 
+interface SubmitRequestBody {
+  answers: Record<string, string>;
+}
+
 export async function POST(request: Request) {
   try {
     // Get D1 database binding from Cloudflare context
     const { env } = getRequestContext();
     const db = env.DB;
     
-    const body = await request.json();
+    const body = await request.json() as SubmitRequestBody;
     const { answers } = body; // answers: { questionId: userAnswer }
     
     if (!answers || typeof answers !== 'object') {
