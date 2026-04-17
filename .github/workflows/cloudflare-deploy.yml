@@ -29,22 +29,12 @@ jobs:
           cd webapp
           npm ci
       
-      - name: Build Next.js app
-        run: |
-          cd webapp
-          npm run build
-      
-      - name: Install Wrangler
-        run: npm install -g wrangler
-      
       - name: Build for Cloudflare Pages
         run: |
           cd webapp
-          npx @cloudflare/next-on-pages@latest
-        env:
-          NODE_VERSION: 20
-      
-      - name: Publish to Cloudflare Pages
+          npm run pages:build
+          
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
