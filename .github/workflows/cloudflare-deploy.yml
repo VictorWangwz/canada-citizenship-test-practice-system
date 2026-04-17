@@ -34,17 +34,12 @@ jobs:
           cd webapp
           npx @cloudflare/next-on-pages@1
           
-      - name: Set compatibility flags via API
-        run: |
-          curl -s -X PATCH "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/canada-citizenship-test" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{"deployment_configs":{"production":{"compatibility_date":"2024-01-01","compatibility_flags":["nodejs_compat"]},"preview":{"compatibility_date":"2024-01-01","compatibility_flags":["nodejs_compat"]}}}'
-
+     
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .vercel/output/static --project-name=canada-citizenship-test
+          # Removed --project-name and the path override
+          command: pages deploy
           workingDirectory: webapp
