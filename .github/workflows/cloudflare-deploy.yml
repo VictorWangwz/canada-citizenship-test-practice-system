@@ -28,16 +28,17 @@ jobs:
         run: |
           cd webapp
           npm ci
+          npm install -g wrangler open-next
       
-      - name: Build for Cloudflare Pages
+      - name: Build with OpenNext
         run: |
           cd webapp
-          npm run pages:build
+          npx open-next@latest build --platform cloudflare
           
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .vercel/output/static --project-name=canada-citizenship-test
+          command: pages deploy .open-next --project-name=canada-citizenship-test
           workingDirectory: webapp
