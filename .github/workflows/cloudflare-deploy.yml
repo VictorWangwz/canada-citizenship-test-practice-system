@@ -39,5 +39,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .vercel/output/static --project-name=canada-citizenship-test
+          command: pages deploy .vercel/output/static --project-name=canada-citizenship-test --compatibility-flag=nodejs_compat --compatibility-date=2024-01-01
           workingDirectory: webapp
