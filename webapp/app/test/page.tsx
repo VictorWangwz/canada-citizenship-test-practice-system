@@ -16,6 +16,19 @@ interface Question {
   source: string | null;
 }
 
+interface QuestionsResponse {
+  success: boolean;
+  questions?: Question[];
+  error?: string;
+}
+
+interface SubmitResponse {
+  success: boolean;
+  error?: string;
+  results?: any;
+  summary?: any;
+}
+
 export default function TestPage() {
   const router = useRouter();
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -57,9 +70,9 @@ export default function TestPage() {
   const fetchQuestions = async () => {
     try {
       const response = await fetch('/api/questions?count=20');
-      const data = await response.json();
+      const data = await response.json() as QuestionsResponse;
       
-      if (data.success) {
+      if (data.success && data.questions) {
         setQuestions(data.questions);
       } else {
         setError(data.error || 'Failed to load questions');
@@ -118,7 +131,7 @@ export default function TestPage() {
         body: JSON.stringify({ answers: letterAnswers }),
       });
       
-      const data = await response.json();
+      const data = await response.json() as SubmitResponse;
       
       if (data.success) {
         // Store results in sessionStorage and navigate to results page
